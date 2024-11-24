@@ -2,9 +2,9 @@
     <x-slot name="header">
         <div class="flex justify-between">
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                {{ __('permissions/List') }}
+                {{ __('roles/List') }}
             </h2>
-            <a href="{{ route('permission.create') }}" class="bg-slate-700 text-sm rounded-md text-white px-3 py-3">
+            <a href="{{ route('role.create') }}" class="bg-slate-700 text-sm rounded-md text-white px-3 py-3">
                 Create
             </a>
         </div>
@@ -24,19 +24,19 @@
                         </tr>
                     </thead>
                     <tbody class="">
-                        @if ($permissions->isNotEmpty())
-                            @foreach ($permissions as $permission)
+                        @if ($roles->isNotEmpty())
+                            @foreach ($roles as $role)
                                 <tr class="border-b border-slate-700">
-                                    <td class="px-6 py-3 text-left"> {{ $permission->id }} </td>
-                                    <td class="px-6 py-3 text-left"> {{ $permission->name }} </td>
-                                    <td class="px-6 py-3 text-left"> {{ $permission->created_at }} </td>
+                                    <td class="px-6 py-3 text-left"> {{ $role->id }} </td>
+                                    <td class="px-6 py-3 text-left"> {{ $role->name }} </td>
+                                    <td class="px-6 py-3 text-left"> {{ $role->created_at }} </td>
                                     <td class="px-6 py-3 text-center">
-                                        <a href="{{ route('permission.edit', $permission->id) }}"
+                                        <a href="{{ route('role.edit', $role->id) }}"
                                             class="bg-slate-700 text-sm rounded-md text-white px-3 mx-2 py-2 hover:bg-slate-600">
                                             Edit
                                         </a>
-                                        <form action="{{ route('permission.delete', $permission->id) }}" method="POST" class="inline-block"
-                                            onsubmit="return confirm('Are you sure you want to delete this permission?')">
+                                        <form action="{{ route('role.delete', $role->id) }}" method="POST" class="inline-block"
+                                            onsubmit="return confirm('Are you sure you want to delete this role?')">
                                           @csrf
                                           @method('DELETE')
                                           <button type="submit" class="bg-red-600 text-sm rounded-md text-white px-3 py-2 hover:bg-red-500">
@@ -52,7 +52,7 @@
                         @endif
                     </tbody>
                 </table>
-                {{$permissions->links() }}
+                {{$roles->links() }}
             </div>
         </div>
 </x-app-layout>
