@@ -1,0 +1,5 @@
+ php artisan permission:show 
+ php artisan tinker
+$user = \App\Models\User::find(1)                                                                                                                       
+$user->getRoleNames();                                                                                                                                  
+$user->getAllPermissions(); 

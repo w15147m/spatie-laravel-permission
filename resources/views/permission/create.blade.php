@@ -2,9 +2,9 @@
     <x-slot name="header">
         <div class="flex justify-between">
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                {{ $permission ? __('Edit permission') : __('Create permission') }}
+                {{ $permission ? __('permission / Edit') : __('permission / Create') }}
             </h2>
-            <a href="{{ route('permission.list') }}" class="bg-slate-700 text-sm rounded-md text-white px-3 py-1">
+            <a href="{{ route('permission.index') }}" class="bg-slate-700 text-sm rounded-md text-white px-3 py-1">
                 Back
             </a>
         </div>

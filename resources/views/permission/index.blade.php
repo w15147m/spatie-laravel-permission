@@ -24,6 +24,7 @@
                         </tr>
                     </thead>
                     <tbody class="">
+                        
                         @if ($permissions->isNotEmpty())
                             @foreach ($permissions as $permission)
                                 <tr class="border-b border-slate-700">

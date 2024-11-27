@@ -2,11 +2,14 @@
     <x-slot name="header">
         <div class="flex justify-between">
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                {{ __('roles/List') }}
+                {{ __('roles / List') }}
             </h2>
+            @can('create roles')
+
             <a href="{{ route('role.create') }}" class="bg-slate-700 text-sm rounded-md text-white px-3 py-3">
                 Create
             </a>
+            @endcan
         </div>
     </x-slot>
     <div class="py-12">
@@ -19,6 +22,7 @@
                         <tr class="border-b">
                             <th class="px-6 py-3 text-left">#</th>
                             <th class="px-6 py-3 text-left">Name</th>
+                            <th class="px-6 py-3 text-left">Permissions</th>
                             <th class="px-6 py-3 text-left">Created</th>
                             <th class="px-6 py-3 text-center">Action</th>
                         </tr>
@@ -29,21 +33,27 @@
                                 <tr class="border-b border-slate-700">
                                     <td class="px-6 py-3 text-left"> {{ $role->id }} </td>
                                     <td class="px-6 py-3 text-left"> {{ $role->name }} </td>
+                                    <td lass="px-6 py-3 text-center"> {{ $role->permissions->pluck('name')->implode(', ') }} </td>
                                     <td class="px-6 py-3 text-left"> {{ $role->created_at }} </td>
                                     <td class="px-6 py-3 text-center">
+                                        @can('edit roles')
                                         <a href="{{ route('role.edit', $role->id) }}"
                                             class="bg-slate-700 text-sm rounded-md text-white px-3 mx-2 py-2 hover:bg-slate-600">
                                             Edit
                                         </a>
-                                        <form action="{{ route('role.delete', $role->id) }}" method="POST" class="inline-block"
+                                        @endcan
+                                        @can('delete roles')
+                                        <form action="{{ route('role.delete', $role->id) }}" method="POST"
+                                            class="inline-block"
                                             onsubmit="return confirm('Are you sure you want to delete this role?')">
-                                          @csrf
-                                          @method('DELETE')
-                                          <button type="submit" class="bg-red-600 text-sm rounded-md text-white px-3 py-2 hover:bg-red-500">
-                                              Delete
-                                          </button>
-                                      </form>
-                                      
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                class="bg-red-600 text-sm rounded-md text-white px-3 py-2 hover:bg-red-500">
+                                                Delete
+                                            </button>
+                                        </form>
+                                        @endcan
                                     </td>
                                 </tr>
                                 </td>
@@ -52,7 +62,7 @@
                         @endif
                     </tbody>
                 </table>
-                {{$roles->links() }}
+                {{ $roles->links() }}
             </div>
         </div>
 </x-app-layout>
