@@ -19,6 +19,8 @@
                         <tr class="border-b">
                             <th class="px-6 py-3 text-left">#</th>
                             <th class="px-6 py-3 text-left">Author</th>
+                            <th class="px-6 py-3 text-left">creator name</th>
+
                             <th class="px-6 py-3 text-left">Article</th>
                             <th class="px-6 py-3 text-center">Action</th>
                         </tr>
@@ -29,6 +31,7 @@
                                 <tr class="border-b border-slate-700">
                                     <td class="px-6 py-3 text-left"> {{ $article->id }} </td>
                                     <td class="px-6 py-3 text-left"> {{ $article->author }} </td>
+                                    <td class="px-6 py-3 text-left"> {{ $article->user->name }} </td>
                                     <td class="px-6 py-3 text-left">
                                        <span class="font-bold"> {{ $article->title }} </span> <br>
                                         {{ $article->text }}

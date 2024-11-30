@@ -30,11 +30,9 @@
                         {{ __('Articles') }}
                     </x-nav-link>
                     @endcan
-                    @can('view users')
                     <x-nav-link :href="route('user.index')" :active="request()->routeIs('user.index')">
                         {{ __('Users') }}
                     </x-nav-link>
-                    @endcan
                 </div>
             </div>
 

@@ -8,7 +8,8 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Routing\Controllers\HasMiddleware;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller implements HasMiddleware
  {
@@ -28,8 +29,12 @@ class UserController extends Controller implements HasMiddleware
      */
     public function index()
     {
-        $users = User::latest()->paginate(10);
-        // $hasRoles = $users->roles->pluck('id');
+        if (Auth::user()->can('view-all-users')) {
+            $users = User::latest()->paginate(10);
+        } else {
+            $users = User::where('id', Auth::id())->paginate();
+        }
+
         return view('users.index', ['users' => $users]);
     }
 
@@ -38,7 +43,8 @@ class UserController extends Controller implements HasMiddleware
      */
     public function create()
     {
-        //
+        $roles = Role::orderBy('name', 'ASC')->paginate(10);
+        return view('users.create', ['user' => null, 'roles' => $roles, 'hasRoles' => null]);
     }
 
     /**
@@ -46,7 +52,21 @@ class UserController extends Controller implements HasMiddleware
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|min:3',
+            'email' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return redirect()->route('user.edit')->withInput()->withErrors($validator); 
+        }
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make(123),
+
+        ]);
+        $user->syncRoles($request->roles);
+        return redirect()->route('user.index')->with('success', 'User updated successfully.');
     }
 
     /**
@@ -94,6 +114,8 @@ class UserController extends Controller implements HasMiddleware
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+        return redirect()->route('user.index')->with('success', 'User deleted successfully.');
     }
 }

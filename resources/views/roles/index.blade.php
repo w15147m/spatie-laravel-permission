@@ -5,7 +5,6 @@
                 {{ __('roles / List') }}
             </h2>
             @can('create roles')
-
             <a href="{{ route('role.create') }}" class="bg-slate-700 text-sm rounded-md text-white px-3 py-3">
                 Create
             </a>

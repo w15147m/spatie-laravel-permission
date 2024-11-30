@@ -9,7 +9,7 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 
 
-class ArticalController extends Controller implements HasMiddleware
+class ArticleController extends Controller implements HasMiddleware
  {
     public static function  middleware(): array
     {
@@ -20,12 +20,20 @@ class ArticalController extends Controller implements HasMiddleware
             new Middleware('permission:delete articles', only: ['destroy']),
         ];
     }
-    public function index()
+    public function getArticles()
     {
         $articles = Article::latest()->paginate(10);
+        // return response()->json($articles->all());
+        return view('dashboard', ['articles' => $articles]);
+    }
+    public function index()
+    {
+        $articles = Article::with('user')->latest()->paginate(10);
+        // return $articles;
         return view('article.index', ['articles' => $articles]);
     }
-
+ 
+     
     /**
      * Show the form for creating a new resource.
      */

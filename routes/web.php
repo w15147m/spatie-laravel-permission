@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\ArticalController;
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\permissionController;
 use App\Http\Controllers\RoleController;
@@ -12,9 +12,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard',
+[ArticleController::class, 'getArticles'])
+->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -41,23 +41,23 @@ Route::middleware('auth')->group(function () {
         Route::delete('/delete/{id}', [RoleController::class, 'destroy'])->name('delete');
     });
     // Role routes
-    Route::resource('articles', ArticalController::class);
-    //  GET|HEAD        articles .................... articles.index › ArticalController@index
-    //  POST            articles .................... articles.store › ArticalController@store
-    //  GET|HEAD        articles/create ........... articles.create › ArticalController@create
-    //  GET|HEAD        articles/{article} ............ articles.show › ArticalController@show
-    //  PUT|PATCH       articles/{article} ........ articles.update › ArticalController@update
-    //  DELETE          articles/{article} ...... articles.destroy › ArticalController@destroy
-    //  GET|HEAD        articles/{article}/edit ....... articles.edit › ArticalController@edit
+    Route::resource('articles', ArticleController::class);
+    //  GET|HEAD        articles .................... articles.index › ArticleController@index
+    //  POST            articles .................... articles.store › ArticleController@store
+    //  GET|HEAD        articles/create ........... articles.create › ArticleController@create
+    //  GET|HEAD        articles/{article} ............ articles.show › ArticleController@show
+    //  PUT|PATCH       articles/{article} ........ articles.update › ArticleController@update
+    //  DELETE          articles/{article} ...... articles.destroy › ArticleController@destroy
+    //  GET|HEAD        articles/{article}/edit ....... articles.edit › ArticleController@edit
 
     Route::resource('user', UserController::class);
-    // GET|HEAD        user ............................................ user.index › ArticalController@index
-    // POST            user ............................................ user.store › ArticalController@store
-    // GET|HEAD        user/create ................................... user.create › ArticalController@create
-    // GET|HEAD        user/{user} ....................................... user.show › ArticalController@show
-    // PUT|PATCH       user/{user} ................................... user.update › ArticalController@update
-    // DELETE          user/{user} ................................. user.destroy › ArticalController@destroy
-    // GET|HEAD        user/{user}/edit .................................. user.edit › ArticalController@edit
+    // GET|HEAD        user ............................................ user.index › ArticleController@index
+    // POST            user ............................................ user.store › ArticleController@store
+    // GET|HEAD        user/create ................................... user.create › ArticleController@create
+    // GET|HEAD        user/{user} ....................................... user.show › ArticleController@show
+    // PUT|PATCH       user/{user} ................................... user.update › ArticleController@update
+    // DELETE          user/{user} ................................. user.destroy › ArticleController@destroy
+    // GET|HEAD        user/{user}/edit .................................. user.edit › ArticleController@edit
     // GET|HEAD        verify-email ............ verification.notice › Auth\EmailVerificationPromptController
     // GET|HEAD        verify-email/{id}/{hash} ............ verification.verify › Auth\VerifyEmailController
 

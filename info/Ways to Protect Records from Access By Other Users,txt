@@ -1,0 +1,7 @@
+Ways to Protect Records from Access By Other Users
+
+1 using if else
+2 php artisan make:policy Task Policy --model=Task
+3 using Multi-Tenancy
+4 if ($task->created_by_id != auth()->id()) abort (403);
+5 UUID 
